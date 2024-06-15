@@ -1,12 +1,23 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
+import { Payment } from '@prisma/client';
 import { AppService } from './app.service';
 
-@Controller()
+@Controller('payments')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @MessagePattern('orders')
+  async create(@Payload() message): Promise<Payment> {
+    return await this.appService.create({
+      amount: message.price,
+      order_id: message.id,
+      client_id: message.client_id,
+    });
+  }
+
+  @MessagePattern('findAllPayments')
+  async findAll(): Promise<Payment[]> {
+    return await this.appService.findAll();
   }
 }
