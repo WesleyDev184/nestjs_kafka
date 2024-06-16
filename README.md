@@ -42,3 +42,13 @@ kafka-console-consumer --bootstrap-server localhost:29092 --topic meutopico --fr
 ```bash
 kafka-console-consumer --bootstrap-server localhost:29092 --topic meutopico --from-beginning
 ```
+
+### 7 - Ver o tópico e suas configs.
+```bash
+kafka-topics --describe --bootstrap-server localhost:29092 --topic meutopico
+```
+
+### 8 - ver a configuração dos grupos.
+```bash
+kafka-consumer-groups --group a --bootstrap-server localhost:29092 --describe
+```
